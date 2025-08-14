@@ -7,7 +7,10 @@
   --color-accent: #10B981;
   --color-bg: #000;    
   --color-br: gray;
+  --color-txt-primary: #fff;
+
   --text-xxl: 2.5rem;
+  --text-xxl: 2rem;
   --size-md: 1rem;
   --size-sm: 0.5rem;
   --size-xs: 0.25rem;

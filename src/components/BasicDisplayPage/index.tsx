@@ -38,12 +38,12 @@ const BasicDisplayPage: React.FC = () => {
             
             <div className="grid gap-6 grid-cols-3">
                 {all_strings && all_strings.map((topic: string, index: number) => (
-                    <div key={index} className="p-4 rounded-lg shadow-md border border-br">
+                    <div key={index} className="p-4 rounded-lg hover:text-blue-600 shadow-md border border-br hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer hover:bg-gray-50">
                         <p
                         onClick={() => {
                             if(title){
                                 // fill_topics_by_title(title);
-                                navigate(`/dsa/notitle`);
+                                navigate(`/page/${topic}`);
                             }
                             else{
                                 console.log("Filling topics by title:", topic);
@@ -51,7 +51,7 @@ const BasicDisplayPage: React.FC = () => {
                                 fill_topics_by_title(topic);
                             }
                         }}
-                        className="text-lg font-bold">{topic}</p>
+                        className="text-lg font-bold hover:text-blue-600 transition-colors duration-200">{topic}</p>
                     </div>
                 ))}
             </div>

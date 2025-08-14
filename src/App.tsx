@@ -5,6 +5,7 @@ import Home from './components/Home'
 import BasicDisplayPage from './components/BasicDisplayPage'
 // import { fill_dsa_topics } from './store/fill_contents'
 import UnderConstructionPage from './components/UnderConstructionPage'
+import BasicPageLayout from './components/BasicPageLayout'
 
 
 function App() {
@@ -19,6 +20,9 @@ function App() {
     <Route path="/about" element={<p>hi</p>} />
     <Route path="/dsa/notitle" element={<UnderConstructionPage />} />
     <Route path="/dsa/:title" element={<BasicDisplayPage />} />
+    {/* <Route path="/page/notitle" element={<UnderConstructionPage />} /> */}
+    <Route path="/page/working" element={<UnderConstructionPage />} />
+    <Route path="/page/:title" element={<BasicPageLayout />} />
     </Routes>
   </BrowserRouter>
   )
