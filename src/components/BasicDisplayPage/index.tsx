@@ -36,7 +36,7 @@ const BasicDisplayPage: React.FC = () => {
             </div>
             <p className="text-lg text-gray-600 mb-8 text-center">Organized into 10 main categories</p>
             
-            <div className="grid gap-6 grid-cols-3">
+            <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
                 {all_strings && all_strings.map((topic: string, index: number) => (
                     <div key={index} className="p-4 rounded-lg hover:text-blue-600 shadow-md border border-br hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer hover:bg-gray-50">
                         <p
