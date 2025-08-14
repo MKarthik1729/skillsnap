@@ -23,6 +23,8 @@ function App() {
     {/* <Route path="/page/notitle" element={<UnderConstructionPage />} /> */}
     <Route path="/page/working" element={<UnderConstructionPage />} />
     <Route path="/page/:title" element={<BasicPageLayout />} />
+    <Route path="/code/:title" element={<UnderConstructionPage />} />
+    <Route path="/code/:title/working" element={<UnderConstructionPage />} />
     </Routes>
   </BrowserRouter>
   )
