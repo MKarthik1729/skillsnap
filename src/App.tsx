@@ -1,22 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
+import Home from './components/Home'
+import BasicDisplayPage from './components/BasicDisplayPage'
+import { fill_dsa_topics } from './store/fill_contents'
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  // Fill the store with DSA topics when the app loads
+  useEffect(() => {
+    fill_dsa_topics();
+  }, []);
 
   return (
-    <>
-      <p>ALL required dependences installed</p>
-      <ul>
-        <li>react-router-dom</li>
-        <li>axios</li>
-        <li>zustand</li>
-        <li>phospher icons</li>
-        <li>tailwind css</li>
-      </ul>
-    </>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/dsa" element={<BasicDisplayPage />} />
+    <Route path="/contact" element={<p>hi</p>} />
+    <Route path="/about" element={<p>hi</p>} />
+    </Routes>
+  </BrowserRouter>
   )
 }
 
