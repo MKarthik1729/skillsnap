@@ -1,100 +1,69 @@
 import { create } from 'zustand';
 
-// Define the type for dictionary entries
-interface DictionaryEntry {
-  key: string;
-  value: string;
-  description?: string;
-  subtopics?: string[];
-  created_at: Date;
-  updated_at: Date;
-}
-
 // Define the store state interface
-interface DictionaryStore {
+interface StringArrayStore {
   // State
-  dictionary: Record<string, DictionaryEntry>;
+  strings: string[];
   
   // Actions
-  add_entry: (key: string, value: string, description?: string, subtopics?: string[]) => void;
-  remove_entry: (key: string) => void;
-  update_entry: (key: string, value: string, description?: string, subtopics?: string[]) => void;
-  get_entry: (key: string) => DictionaryEntry | undefined;
-  clear_dictionary: () => void;
-  get_all_entries: () => DictionaryEntry[];
-  has_key: (key: string) => boolean;
+  add_string: (str: string) => void;
+  remove_string: (index: number) => void;
+  update_string: (index: number, str: string) => void;
+  get_string: (index: number) => string | undefined;
+  clear_strings: () => void;
+  get_all_strings: () => string[];
+  has_string: (str: string) => boolean;
 }
 
 // Create the Zustand store
-export const use_dictionary_store = create<DictionaryStore>((set, get) => ({
+export const use_string_array_store = create<StringArrayStore>((set, get) => ({
   // Initial state
-  dictionary: {},
+  strings: [],
 
-  // Add a new entry to the dictionary
-  add_entry: (key: string, value: string, description?: string, subtopics?: string[]) => {
-    const now = new Date();
+  // Add a new string to the array
+  add_string: (str: string) => {
     set((state) => ({
-      dictionary: {
-        ...state.dictionary,
-        [key]: {
-          key,
-          value,
-          description,
-          subtopics,
-          created_at: now,
-          updated_at: now,
-        },
-      },
+      strings: [...state.strings, str],
     }));
   },
 
-  // Remove an entry from the dictionary
-  remove_entry: (key: string) => {
-    set((state) => {
-      const new_dictionary = { ...state.dictionary };
-      delete new_dictionary[key];
-      return { dictionary: new_dictionary };
-    });
+  // Remove a string from the array by index
+  remove_string: (index: number) => {
+    set((state) => ({
+      strings: state.strings.filter((_, i) => i !== index),
+    }));
   },
 
-  // Update an existing entry
-  update_entry: (key: string, value: string, description?: string, subtopics?: string[]) => {
+  // Update a string at a specific index
+  update_string: (index: number, str: string) => {
     set((state) => {
-      if (state.dictionary[key]) {
-        return {
-          dictionary: {
-            ...state.dictionary,
-            [key]: {
-              ...state.dictionary[key],
-              value,
-              description,
-              subtopics,
-              updated_at: new Date(),
-            },
-          },
-        };
+      if (index >= 0 && index < state.strings.length) {
+        const new_strings = [...state.strings];
+        new_strings[index] = str;
+        return { strings: new_strings };
       }
       return state;
     });
   },
 
-  // Get a specific entry by key
-  get_entry: (key: string) => {
-    return get().dictionary[key];
+  // Get a specific string by index
+  get_string: (index: number) => {
+    const strings = get().strings;
+    return index >= 0 && index < strings.length ? strings[index] : undefined;
   },
 
-  // Clear all entries from the dictionary
-  clear_dictionary: () => {
-    set({ dictionary: {} });
+  // Clear all strings from the array
+  clear_strings: () => {
+    set({ strings: [] });
   },
 
-  // Get all entries as an array
-  get_all_entries: () => {
-    return Object.values(get().dictionary);
+  // Get all strings as an array
+  get_all_strings: () => {
+    return get().strings;
   },
 
-  // Check if a key exists in the dictionary
-  has_key: (key: string) => {
-    return key in get().dictionary;
+  // Check if a string exists in the array
+  has_string: (str: string) => {
+    return get().strings.includes(str);
   },
 }));
