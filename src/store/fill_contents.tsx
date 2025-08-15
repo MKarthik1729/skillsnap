@@ -2,6 +2,7 @@ import { use_string_array_store } from './content';
 import { fetch_skills } from '../services/skills';
 import { fetch_topics_by_skill_id } from '../services/topics';
 import { fetch_page_data_by_topic_id } from '../services/page';
+import { fetch_code_data_by_topic_id } from '../services/code';
 
 // Dictionary containing all DSA topics data
 const dsa_topics_dictionary = {
@@ -215,6 +216,18 @@ export const get_page_data_by_topic = async (topic_input: string) => {
     return page_data;
   } catch (error) {
     console.error(`Error fetching page data for topic "${topic_input}":`, error);
+    throw error;
+  }
+};
+
+// Function to get code data for a topic by inputting a string (topic name or ID)
+export const get_code_data_by_topic = async (topic_input: string) => {
+  try {
+    const code_data = await fetch_code_data_by_topic_id(topic_input);
+    console.log(`Code data for topic "${topic_input}":`, code_data);
+    return code_data;
+  } catch (error) {
+    console.error(`Error fetching code data for topic "${topic_input}":`, error);
     throw error;
   }
 };

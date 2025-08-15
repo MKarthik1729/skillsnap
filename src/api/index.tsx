@@ -13,7 +13,7 @@ const environment_links: EnvironmentLinks = {
 };
 
 // Current active environment (can be changed based on build process or environment variables)
-const current_environment: keyof EnvironmentLinks = 'dev';
+const current_environment: keyof EnvironmentLinks = 'prod';
 
 // Get the current active link
 export const get_current_link = (): string => {

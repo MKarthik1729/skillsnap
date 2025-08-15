@@ -48,9 +48,7 @@ const BasicPageLayout: React.FC = () => {
     // Show error state
     if (error) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
-                <div className="text-xl text-red-600">Error: {error}</div>
-            </div>
+            <UnderConstructionPage />
         );
     }
 
