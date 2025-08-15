@@ -1,4 +1,7 @@
 import { use_string_array_store } from './content';
+import { fetch_skills } from '../services/skills';
+import { fetch_topics_by_skill_id } from '../services/topics';
+import { fetch_page_data_by_topic_id } from '../services/page';
 
 // Dictionary containing all DSA topics data
 const dsa_topics_dictionary = {
@@ -177,5 +180,41 @@ export const fill_topics_by_title = (title: string) => {
     topics.forEach(topic => {
       add_string(topic);
     });
+  }
+};
+
+// Function to get skills from API and console.log them
+export const get_skills = async () => {
+  try {
+    const skills = await fetch_skills();
+    console.log('Fetched skills:', skills);
+    return skills;
+  } catch (error) {
+    console.error('Error fetching skills:', error);
+    throw error;
+  }
+};
+
+// Function to get topics for a skill by inputting a string (skill name or ID)
+export const get_topics_of_skill = async (skill_input: string) => {
+  try {
+    const topics = await fetch_topics_by_skill_id(skill_input);
+    console.log(`Topics for skill "${skill_input}":`, topics);
+    return topics;
+  } catch (error) {
+    console.error(`Error fetching topics for skill "${skill_input}":`, error);
+    throw error;
+  }
+};
+
+// Function to get page data for a topic by inputting a string (topic name or ID)
+export const get_page_data_by_topic = async (topic_input: string) => {
+  try {
+    const page_data = await fetch_page_data_by_topic_id(topic_input);
+    console.log(`Page data for topic "${topic_input}":`, page_data);
+    return page_data;
+  } catch (error) {
+    console.error(`Error fetching page data for topic "${topic_input}":`, error);
+    throw error;
   }
 };

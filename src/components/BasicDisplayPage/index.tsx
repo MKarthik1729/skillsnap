@@ -1,6 +1,6 @@
-import React, {  useEffect } from "react";
+import React, {  useEffect, useState } from "react";
 import { use_string_array_store } from "../../store/content";
-import { fill_topics_by_title, fill_dsa_topics } from "../../store/fill_contents";
+import {  get_skills, get_topics_of_skill } from "../../store/fill_contents";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { ArrowLeftIcon   } from "@phosphor-icons/react";
@@ -8,13 +8,22 @@ import { ArrowLeftIcon   } from "@phosphor-icons/react";
 
 const BasicDisplayPage: React.FC = () => {
     const { title } = useParams() || { title: null };
-    const { strings: all_strings } = use_string_array_store();
+    const { strings  } = use_string_array_store();
+    const [all_strings, set_all_strings] = useState<any[]>(strings);
     
     const navigate = useNavigate();
     useEffect(() => {
         // Print the entire strings array
-        if(title)fill_topics_by_title(title);
-        else fill_dsa_topics();
+        if(title) get_topics_of_skill(title).then((topics) => {
+            console.log(topics);
+            set_all_strings(topics);
+        });
+        else {
+            // fill_dsa_topics();
+            get_skills().then((skills) => {
+                set_all_strings(skills);
+            });
+        }
     }, [title]);
 
     // Get all strings as an array
@@ -37,21 +46,23 @@ const BasicDisplayPage: React.FC = () => {
             <p className="text-lg text-gray-600 mb-8 text-center">Organized into 10 main categories</p>
             
             <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
-                {all_strings && all_strings.map((topic: string, index: number) => (
+                    {all_strings && all_strings.map((topic: any, index: number) => (
                     <div key={index} className="p-4 rounded-lg hover:text-blue-600 shadow-md border border-br hover:shadow-lg hover:scale-105 transition-all duration-200 cursor-pointer hover:bg-gray-50">
                         <p
                         onClick={() => {
                             if(title){
                                 // fill_topics_by_title(title);
-                                navigate(`/page/${topic}`);
+                                navigate(`/page/${topic._id}`);
                             }
                             else{
                                 console.log("Filling topics by title:", topic);
-                                navigate(`/dsa/${topic}`);
-                                fill_topics_by_title(topic);
+                                navigate(`/dsa/${topic._id}`);
+                                // fill_topics_by_title(topic.title);
                             }
                         }}
-                        className="text-lg font-bold hover:text-blue-600 transition-colors duration-200">{topic}</p>
+                        className="text-lg font-bold hover:text-blue-600 transition-colors duration-200">
+                            {topic.title || topic.name}
+                            </p>
                     </div>
                 ))}
             </div>
